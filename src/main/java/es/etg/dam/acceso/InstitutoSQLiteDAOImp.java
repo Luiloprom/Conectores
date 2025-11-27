@@ -50,14 +50,24 @@ public class InstitutoSQLiteDAOImp implements InstitutoDAO {
     public int insertar(Alumno a) throws SQLException {
         final String query = "INSERT INTO Alumno (nombre, apellido, edad) VALUES (?,?,?)";
 
-        PreparedStatement ps = conn.prepareStatement(query);
+        int numeroRegistros;
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, a.getNombre());
+            ps.setString(2, a.getApellido());
+            ps.setInt(3, a.getEdad());
+            numeroRegistros = ps.executeUpdate();
+        }
+        return numeroRegistros;
+    }
 
-        ps.setString(1, a.getNombre());
-        ps.setString(2, a.getApellido());
-        ps.setInt(3, a.getEdad());
-        ps.executeUpdate();
+    @Override
+    public int insertar(List<Alumno> alumnos) throws SQLException {
+        int numeroRegistros = 0;
 
-        return 1;
+        for (Alumno alumno : alumnos) {
+            numeroRegistros += insertar(alumno);
+        }
+        return numeroRegistros;
     }
 
     @Override
@@ -73,11 +83,6 @@ public class InstitutoSQLiteDAOImp implements InstitutoDAO {
     @Override
     public List<Alumno> listarAlumnos(int edad) throws SQLException {
         throw new UnsupportedOperationException("Unimplemented method 'listarAlumnos'");
-    }
-
-    @Override
-    public int insertar(List<Alumno> alumnos) throws SQLException {
-        throw new UnsupportedOperationException("Unimplemented method 'insertar'");
     }
 
     @Override

@@ -11,20 +11,28 @@ public class App {
 
         alumnos = institutoDAO.listarAlumnos();
 
-        for (Alumno alumno : alumnos) {
-            System.out.println("Nombre : " + alumno.getNombre() + " Apellido : " + alumno.getApellido() + " Edad : "
-                    + alumno.getEdad());
-        }
+        pintarAlumnos(alumnos);
 
-        Alumno a = new Alumno("David", "Hoyas", 19);
-        institutoDAO.insertar(a);
+        List<Alumno> alumnos2 = new ArrayList<>();
+
+        Alumno a = new Alumno("Eva", "Pinilla", 40);
+        Alumno b = new Alumno("Pepe", "Cabeza", 19);
+        alumnos2.add(a);
+        alumnos2.add(b);
+
+        int numeroRegistros = institutoDAO.insertar(alumnos2);
 
         alumnos = institutoDAO.listarAlumnos();
 
+        pintarAlumnos(alumnos);
+        System.out.println(String.format("El numero de alumnos insertados son %d", numeroRegistros));
+
+    }
+
+    public static void pintarAlumnos(List<Alumno> alumnos) {
         for (Alumno alumno : alumnos) {
             System.out.println("Nombre : " + alumno.getNombre() + " Apellido : " + alumno.getApellido() + " Edad : "
                     + alumno.getEdad());
         }
-
     }
 }
