@@ -1,31 +1,18 @@
 package es.etg.dam.acceso;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import es.etg.dam.acceso.model.Alumno;
+import es.etg.dam.acceso.model.InstitutoDAO;
+import es.etg.dam.acceso.model.db.InstitutoOracleXeDAOImp;
+import es.etg.dam.acceso.model.db.InstitutoSQLiteDAOImp;
 
 public class App {
     public static void main(String[] args) throws Exception {
         InstitutoDAO institutoDAO = new InstitutoSQLiteDAOImp();
+        InstitutoOracleXeDAOImp oracle = new InstitutoOracleXeDAOImp();
 
-        List<Alumno> alumnos = new ArrayList<>();
-
-        alumnos = institutoDAO.listarAlumnos();
-
-        pintarAlumnos(alumnos);
-
-        List<Alumno> alumnos2 = new ArrayList<>();
-
-        Alumno a = new Alumno("Eva", "Pinilla", 40);
-        Alumno b = new Alumno("Pepe", "Cabeza", 19);
-        alumnos2.add(a);
-        alumnos2.add(b);
-
-        int numeroRegistros = institutoDAO.insertar(alumnos2);
-
-        alumnos = institutoDAO.listarAlumnos();
-
-        pintarAlumnos(alumnos);
-        System.out.println(String.format("El numero de alumnos insertados son %d", numeroRegistros));
+        System.out.println(oracle.testConexion());
 
     }
 

@@ -1,4 +1,4 @@
-package es.etg.dam.acceso;
+package es.etg.dam.acceso.model;
 
 import java.sql.SQLException;
 import java.util.List;
