@@ -3,16 +3,13 @@ package es.etg.dam.acceso;
 import java.util.List;
 
 import es.etg.dam.acceso.model.Alumno;
+import es.etg.dam.acceso.model.InstitutiDAOFactory;
 import es.etg.dam.acceso.model.InstitutoDAO;
-import es.etg.dam.acceso.model.db.InstitutoOracleXeDAOImp;
-import es.etg.dam.acceso.model.db.InstitutoSQLiteDAOImp;
+import es.etg.dam.acceso.model.Modo;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        InstitutoDAO institutoDAO = new InstitutoSQLiteDAOImp();
-        InstitutoOracleXeDAOImp oracle = new InstitutoOracleXeDAOImp();
-
-        System.out.println(oracle.testConexion());
+        InstitutoDAO institutoDAO = InstitutiDAOFactory.obtenerModo(Modo.SQLITE);
 
     }
 
