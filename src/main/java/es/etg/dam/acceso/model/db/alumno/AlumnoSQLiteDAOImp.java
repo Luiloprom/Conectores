@@ -1,4 +1,4 @@
-package es.etg.dam.acceso.model.db;
+package es.etg.dam.acceso.model.db.alumno;
 
 import java.io.File;
 import java.net.URL;
@@ -11,16 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.etg.dam.acceso.model.Alumno;
-import es.etg.dam.acceso.model.InstitutoDAO;
 
-public class InstitutoSQLiteDAOImp implements InstitutoDAO {
+public class AlumnoSQLiteDAOImp implements AlumnoDAO {
     private static final String DATABASE_NAME = "es/etg/dam/acceso/mibase.db";
     private static final String JDBC_URL = "jdbc:sqlite:%s";
 
     private final Connection conn;
 
-    public InstitutoSQLiteDAOImp() throws Exception {
-        URL resource = InstitutoSQLiteDAOImp.class.getClassLoader().getResource(DATABASE_NAME);
+    public AlumnoSQLiteDAOImp() throws Exception {
+        URL resource = AlumnoSQLiteDAOImp.class.getClassLoader().getResource(DATABASE_NAME);
         String path = new File(resource.toURI()).getAbsolutePath();
         String url = String.format(JDBC_URL, path);
         this.conn = DriverManager.getConnection(url);

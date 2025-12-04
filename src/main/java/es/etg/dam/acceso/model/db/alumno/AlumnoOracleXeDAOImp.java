@@ -1,4 +1,4 @@
-package es.etg.dam.acceso.model.db;
+package es.etg.dam.acceso.model.db.alumno;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,16 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.etg.dam.acceso.model.Alumno;
-import es.etg.dam.acceso.model.InstitutoDAO;
 
-public class InstitutoOracleXeDAOImp implements InstitutoDAO {
+public class AlumnoOracleXeDAOImp implements AlumnoDAO {
 
     private final Connection conn;
     private final String URL = "jdbc:oracle:thin:%s/%s@localhost:1521/instituto";
     private final String DATABASE_USER = "usuario";
     private final String DATABASE_PASS = "usuario";
 
-    public InstitutoOracleXeDAOImp() throws Exception {
+    public AlumnoOracleXeDAOImp() throws Exception {
         conn = DriverManager.getConnection(String.format(URL, DATABASE_USER, DATABASE_PASS));
     }
 

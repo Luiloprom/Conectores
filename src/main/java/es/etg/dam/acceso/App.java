@@ -1,22 +1,16 @@
 package es.etg.dam.acceso;
 
-import java.util.List;
-
-import es.etg.dam.acceso.model.Alumno;
-import es.etg.dam.acceso.model.InstitutiDAOFactory;
-import es.etg.dam.acceso.model.InstitutoDAO;
-import es.etg.dam.acceso.model.Modo;
+import es.etg.dam.acceso.controller.InstitutoController;
+import es.etg.dam.acceso.view.ViewController;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        InstitutoDAO institutoDAO = InstitutiDAOFactory.obtenerModo(Modo.SQLITE);
+        ViewController viewController = new ViewController();
+
+        InstitutoController institutoController = new InstitutoController(viewController);
+
+        institutoController.empezar();
 
     }
 
-    public static void pintarAlumnos(List<Alumno> alumnos) {
-        for (Alumno alumno : alumnos) {
-            System.out.println("Nombre : " + alumno.getNombre() + " Apellido : " + alumno.getApellido() + " Edad : "
-                    + alumno.getEdad());
-        }
-    }
 }

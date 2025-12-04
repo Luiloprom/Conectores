@@ -1,9 +1,11 @@
-package es.etg.dam.acceso.model;
+package es.etg.dam.acceso.model.db.alumno;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public interface InstitutoDAO {
+import es.etg.dam.acceso.model.Alumno;
+
+public interface AlumnoDAO {
 
     public void crearTablaAlumno() throws Exception;
 

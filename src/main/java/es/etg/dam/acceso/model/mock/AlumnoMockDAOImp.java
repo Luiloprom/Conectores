@@ -4,9 +4,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import es.etg.dam.acceso.model.Alumno;
-import es.etg.dam.acceso.model.InstitutoDAO;
+import es.etg.dam.acceso.model.db.alumno.AlumnoDAO;
 
-public class InstitutoMockDAOImp implements InstitutoDAO {
+public class AlumnoMockDAOImp implements AlumnoDAO {
 
     @Override
     public void crearTablaAlumno() throws Exception {
