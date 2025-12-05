@@ -10,7 +10,5 @@ public class App {
         InstitutoController institutoController = new InstitutoController(viewController);
 
         institutoController.empezar();
-
     }
-
 }
