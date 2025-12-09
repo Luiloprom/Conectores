@@ -3,43 +3,19 @@ package es.etg.dam.acceso.model.mock;
 import java.sql.SQLException;
 import java.util.List;
 
+import es.etg.dam.acceso.dao.AlumnoDAO;
 import es.etg.dam.acceso.model.Alumno;
-import es.etg.dam.acceso.model.db.alumno.AlumnoDAO;
 
 public class AlumnoMockDAOImp implements AlumnoDAO {
 
     @Override
-    public void crearTablaAlumno() throws Exception {
+    public void crearTabla() throws SQLException {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'crearTablaAlumno'");
-    }
-
-    @Override
-    public void eliminarTablaAlumno() throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'eliminarTablaAlumno'");
-    }
-
-    @Override
-    public List<Alumno> listarAlumnos() throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'listarAlumnos'");
-    }
-
-    @Override
-    public List<Alumno> listarAlumnos(int edad) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'listarAlumnos'");
+        throw new UnsupportedOperationException("Unimplemented method 'crearTabla'");
     }
 
     @Override
     public int insertar(Alumno a) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'insertar'");
-    }
-
-    @Override
-    public int insertar(List<Alumno> alumnos) throws SQLException {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'insertar'");
     }
@@ -51,9 +27,21 @@ public class AlumnoMockDAOImp implements AlumnoDAO {
     }
 
     @Override
-    public int borrar(Alumno a) throws SQLException {
+    public List<Alumno> listarAll() throws SQLException {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'borrar'");
+        throw new UnsupportedOperationException("Unimplemented method 'listarAll'");
+    }
+
+    @Override
+    public List<Alumno> listarRelacionados() throws SQLException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'listarRelacionados'");
+    }
+
+    @Override
+    public List<Alumno> consultar(String a) throws SQLException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'consultar'");
     }
 
 }

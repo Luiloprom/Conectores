@@ -3,11 +3,11 @@ package es.etg.dam.acceso.controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import es.etg.dam.acceso.dao.AlumnoDAO;
 import es.etg.dam.acceso.model.Alumno;
 import es.etg.dam.acceso.model.Instituto;
 import es.etg.dam.acceso.model.InstitutoFactory;
 import es.etg.dam.acceso.model.Modo;
-import es.etg.dam.acceso.model.db.alumno.AlumnoDAO;
 import es.etg.dam.acceso.view.ViewController;
 
 public class InstitutoController {
@@ -28,7 +28,13 @@ public class InstitutoController {
     }
 
     public List<Alumno> listarAlumnos() throws SQLException {
-        return instituto.listarAlumnos();
+        return instituto.listarAllAlumnos();
+    }
+
+    public void insertarAlumno(String nombre, String apellidos, int edad, int cod_tutor) throws SQLException {
+        Alumno al = new Alumno(null, nombre, apellidos, edad, cod_tutor);
+
+        instituto.insertarAlumno(al);
     }
 
 }
