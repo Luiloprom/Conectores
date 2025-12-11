@@ -13,8 +13,4 @@ public interface DAO<T> {
 
     List<T> listarAll() throws SQLException;
 
-    List<T> listarRelacionados() throws SQLException;
-
-    List<T> consultar(String a) throws SQLException;
-
 }

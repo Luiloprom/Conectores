@@ -23,13 +23,12 @@ public class ViewController {
     private final String OPC_4 = "4 - Actualizar Alumno";
     private final String OPC_5 = "5 - Actualizar Profesor";
     private final String OPC_6 = "6 - Listar todos los Alumnos";
-    private final String OPC_7 = "7 - Listar Alumnos y sus ptutores";
-    private final String OPC_8 = "8 - Consulta libre";
-    private final String OPC_9 = "9 - Volver";
-    private final String OPC_10 = "10 - Salir";
+    private final String OPC_7 = "7 - Listar Alumnos y sus tutores";
+    private final String OPC_8 = "8 - Buscar alumno por id";
+    private final String OPC_9 = "9 - Salir";
 
-    private final String FORMAT_MENU_PRINCIPAL = "Elige una opcion : \n %s \n %s \n %s \n %s \n %s \n %s \n %s \n %s \n %s\n %s";
-    private final String MENU_PRINCIPAL = String.format(FORMAT_MENU_PRINCIPAL,OPC_1, OPC_2, OPC_3, OPC_4, OPC_5, OPC_6, OPC_7, OPC_8, OPC_9, OPC_10);
+    private final String FORMAT_MENU_PRINCIPAL = "Elige una opcion : \n %s \n %s \n %s \n %s \n %s \n %s \n %s \n %s \n %s";
+    private final String MENU_PRINCIPAL = String.format(FORMAT_MENU_PRINCIPAL,OPC_1, OPC_2, OPC_3, OPC_4, OPC_5, OPC_6, OPC_7, OPC_8, OPC_9);
 
 
     protected InstitutoController institutoController;
@@ -56,9 +55,11 @@ public class ViewController {
                 .parseInt(JOptionPane.showInputDialog(MENU_PRINCIPAL));
         switch (respuesta) {
             case 2 -> insertarAlumno();
+            case 4 -> actualizarAlumno();
             case 6 -> listarAlumnos();
-            case 9 -> cargarMenuInicial();
-            case 10 -> salir = true;
+            case 7 -> listarRelacionados();
+            case 8 -> obtenerAlumno();
+            case 9 -> salir = true;
             default -> throw new AssertionError();
         }
         }
@@ -75,10 +76,19 @@ public class ViewController {
         institutoController.insertarAlumno(nombre, apellido, edad, codTutor);
     }
 
-    // Opcion 3 - Actualizar Alumno
+    // Opcion 4 - Actualizar Alumno
     private void actualizarAlumno() throws SQLException{
-        Long id = Long.parseLong(JOptionPane.showInputDialog("Ingresa el id del alumno a modificar"));
-        
+        Long id = Long.valueOf(JOptionPane.showInputDialog("Ingresa el id del alumno a modificar"));
+        if (institutoController.obtenerAlumno(id) != null){
+            String nombre = JOptionPane.showInputDialog("Ingresa un nuevo nombre : ");
+            String apellido = JOptionPane.showInputDialog("Ingresa los nuevos apellidos : ");
+            int edad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nueva edad : "));
+            int codTutor = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el nuevo codigo del tutor"));
+            institutoController.modificarAlumno(id, nombre, apellido, edad, codTutor);
+        } else {
+            JOptionPane.showMessageDialog(null, String.format("No se a encontrado el alumno con id %d ", id));
+        }
+
     }
 
     // Opcion 6 - Listar Todos los alumnos
@@ -89,5 +99,30 @@ public class ViewController {
             sb.append(alumno.toString());
         }
         JOptionPane.showMessageDialog(null, sb);
+    }
+
+    // Opcion 7 - Listar Alumnos y sus tutores 
+    private void listarRelacionados() throws SQLException {
+        List<String> lineas;
+        try {
+            lineas = institutoController.listarRelacionados();
+            StringBuilder sb = new StringBuilder();
+            for (String linea : lineas) {
+                sb.append(linea).append("\n");
+            }
+            JOptionPane.showMessageDialog(null, sb);
+        } catch (SQLException e) {
+        }
+    }
+
+    // Opcion 8 - Listar Alumnos por idç
+    private void obtenerAlumno() throws SQLException {
+        Long id = Long.valueOf(JOptionPane.showInputDialog("Ingresa el id del alumno que quieres buscar"));
+        Alumno a = institutoController.obtenerAlumno(id);
+        if (a != null) {
+            JOptionPane.showMessageDialog(null, a.toString());
+        } else {
+            JOptionPane.showMessageDialog(null, String.format("El alumno con id %d no existe", id));
+        }
     }
 }

@@ -30,10 +30,12 @@ public class AlumnoSQLiteDAOImp implements AlumnoDAO {
     public void crearTabla() throws SQLException {
         final String query = """
                 CREATE TABLE IF NOT EXISTS alumno (
-                    nombre TEXT NOT NULL,
-                    apellido TEXT NOT NULL,
-                    edad INTEGER NOT NULL,
-                    PRIMARY KEY (nombre, apellido)
+                    cod_alumn INTEGER PRIMARY KEY AUTOINCREMENT,
+                    nombre    TEXT NOT NULL,
+                    apellido  TEXT,
+                    edad      INTEGER,
+                    cod_tutor INTEGER,
+                    FOREIGN KEY (cod_tutor) REFERENCES profesor (cod_prof)
                 )
                 """;
         try (PreparedStatement ps = conn.prepareStatement(query)) {
@@ -43,29 +45,41 @@ public class AlumnoSQLiteDAOImp implements AlumnoDAO {
 
     @Override
     public int insertar(Alumno a) throws SQLException {
-        final String query = "INSERT INTO Alumno (nombre, apellido, edad) VALUES (?,?,?)";
+        final String query = """
+                INSERT INTO alumno (nombre, apellido, edad, cod_tutor)
+                VALUES (?,?,?,?)
+                """;
 
-        int numeroRegistros;
         try (PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, a.getNombre());
             ps.setString(2, a.getApellido());
             ps.setInt(3, a.getEdad());
-            numeroRegistros = ps.executeUpdate();
+            ps.setInt(4, a.getCodTutor());
+            ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()){
+                a.setCodAlumno(rs.getLong(1));
+            }
+            return 1;
         }
-        return numeroRegistros;
     }
 
     @Override
     public int actualizar(Alumno a) throws SQLException {
-        final String query = "UPDATE alumno SET edad = ? where nombre = ?";
-        int numRegistros;
+        final String query = """
+                UPDATE alumno
+                SET nombre = ?, apellido = ?, edad = ?, cod_tutor = ?
+                WHERE cod_alumn = ?
+                """;
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setInt(1, a.getEdad());
-            ps.setString(2, a.getNombre());
-            numRegistros = ps.executeUpdate();
+            ps.setString(1, a.getNombre());
+            ps.setString(2, a.getApellido());
+            ps.setInt(3, a.getEdad());
+            ps.setInt(4, a.getCodTutor());
+            ps.setLong(5, a.getCodAlumno());
+            return ps.executeUpdate();
         }
-        return numRegistros;
     }
 
     @Override
@@ -73,7 +87,8 @@ public class AlumnoSQLiteDAOImp implements AlumnoDAO {
         final String query = "SELECT cod_alumn, nombre, apellido, edad, cod_tutor FROM alumno";
 
         List<Alumno> alumnos = new ArrayList<>();
-        try (PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement ps = conn.prepareStatement(query);
+                ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Long codAlumno = rs.getLong("cod_alumn");
                 String nombre = rs.getString("nombre");
@@ -90,9 +105,30 @@ public class AlumnoSQLiteDAOImp implements AlumnoDAO {
     }
 
     @Override
-    public List<Alumno> listarRelacionados() throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'listarRelacionados'");
+    public List<String> listarRelacionados() throws SQLException {
+        final String query = """
+        SELECT a.nombre  AS nombre_alumno,
+                a.apellido AS apellido_alumno,
+                p.nombre  AS nombre_profesor
+        FROM   alumno a , profesor p
+        WHERE a.cod_tutor = p.cod_prof
+        ORDER BY a.nombre
+        """;
+
+    List<String> resultado = new ArrayList<>();
+
+    try (PreparedStatement ps = conn.prepareStatement(query);
+        ResultSet rs = ps.executeQuery()) {
+
+        while (rs.next()) {
+            String nombreAlumno   = rs.getString("nombre_alumno");
+            String apellidoAlumno = rs.getString("apellido_alumno");
+            String nombreProfesor = rs.getString("nombre_profesor");
+            resultado.add(String.format("Alumno : %s %s - Tutor : %s", nombreAlumno, apellidoAlumno, nombreProfesor));
+        }
+    }
+
+    return resultado;
     }
 
     @Override
@@ -101,4 +137,21 @@ public class AlumnoSQLiteDAOImp implements AlumnoDAO {
         throw new UnsupportedOperationException("Unimplemented method 'consultar'");
     }
 
+    @Override
+    public Alumno obtenerAlumno(Long id) throws SQLException {
+        final String query = "SELECT cod_alumn, nombre, apellido, edad, cod_tutor FROM alumno WHERE cod_alumn = ?";
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setLong(1, id);
+            ResultSet rs = ps.executeQuery();
+                if (rs.next()){
+                    Long cod = rs.getLong("cod_alumn");
+                    String nombre = rs.getString("nombre");
+                    String apellido = rs.getString("apellido");
+                    int edad = rs.getInt("edad");
+                    int codTutor = rs.getInt("cod_tutor");
+                return new Alumno(cod, nombre, apellido, edad, codTutor);
+                }
+        }
+        return null;
+    }
 }

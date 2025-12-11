@@ -29,11 +29,15 @@ public class Instituto {
         return alumnoDAO.listarAll();
     };
 
-    public List<Alumno> listarRelacionados() throws SQLException {
+    public List<String> listarRelacionados() throws SQLException {
         return alumnoDAO.listarRelacionados();
     };
 
     public List<Alumno> consultar(String a) throws SQLException {
         return alumnoDAO.consultar(a);
     };
+
+    public Alumno obtenerAlumno (Long id) throws SQLException {
+        return alumnoDAO.obtenerAlumno(id);
+    }
 }

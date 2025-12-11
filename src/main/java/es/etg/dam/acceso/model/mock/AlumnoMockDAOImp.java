@@ -33,7 +33,7 @@ public class AlumnoMockDAOImp implements AlumnoDAO {
     }
 
     @Override
-    public List<Alumno> listarRelacionados() throws SQLException {
+    public List<String> listarRelacionados() throws SQLException {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'listarRelacionados'");
     }
@@ -42,6 +42,12 @@ public class AlumnoMockDAOImp implements AlumnoDAO {
     public List<Alumno> consultar(String a) throws SQLException {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'consultar'");
+    }
+
+    @Override
+    public Alumno obtenerAlumno(Long id) throws SQLException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'obtenerAlumno'");
     }
 
 }
