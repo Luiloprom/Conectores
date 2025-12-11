@@ -17,6 +17,21 @@ public class ViewController {
 
     private final String MENU_CONEXIONES = String.format(FORMAT_MENU_CONEXIONES, OPC_MOCK, OPC_SQLITE, OPC_ORACLE);
 
+    private final String OPC_1 = "1 - Crear Tablas";
+    private final String OPC_2 = "2 - Insertar Alumno";
+    private final String OPC_3 = "3 - Insertar Profesor";
+    private final String OPC_4 = "4 - Actualizar Alumno";
+    private final String OPC_5 = "5 - Actualizar Profesor";
+    private final String OPC_6 = "6 - Listar todos los Alumnos";
+    private final String OPC_7 = "7 - Listar Alumnos y sus ptutores";
+    private final String OPC_8 = "8 - Consulta libre";
+    private final String OPC_9 = "9 - Volver";
+    private final String OPC_10 = "10 - Salir";
+
+    private final String FORMAT_MENU_PRINCIPAL = "Elige una opcion : \n %s \n %s \n %s \n %s \n %s \n %s \n %s \n %s \n %s\n %s";
+    private final String MENU_PRINCIPAL = String.format(FORMAT_MENU_PRINCIPAL,OPC_1, OPC_2, OPC_3, OPC_4, OPC_5, OPC_6, OPC_7, OPC_8, OPC_9, OPC_10);
+
+
     protected InstitutoController institutoController;
 
     public void setInstitutoController(InstitutoController institutoController) {
@@ -35,18 +50,23 @@ public class ViewController {
     }
 
     public void cargarMenuOpciones() throws Exception {
-        int respuesta = Integer
-                .parseInt(JOptionPane.showInputDialog(
-                        "Elije una opcion : \n 1 - Crear Tablas \n 2 - Insertar Alumno \n 3 - Insertar Profesor \n 4 - Actualizar Alumno \n 5 - Actualizar Profesor \n 6 - Listar todos los Alumnos \n 7 - Listar todos los alumnos y sus profesores  \n 8 - Consulta libre "));
+        Boolean salir = false;
+        while (!salir) { 
+            int respuesta = Integer
+                .parseInt(JOptionPane.showInputDialog(MENU_PRINCIPAL));
         switch (respuesta) {
             case 2 -> insertarAlumno();
             case 6 -> listarAlumnos();
+            case 9 -> cargarMenuInicial();
+            case 10 -> salir = true;
             default -> throw new AssertionError();
         }
+        }
+        
     }
 
     // Opcion 2 - Insertar Alumno
-    public void insertarAlumno() throws SQLException {
+    private void insertarAlumno() throws SQLException {
         String nombre = JOptionPane.showInputDialog("Ingresa un nombre : ");
         String apellido = JOptionPane.showInputDialog("Ingresa los apellidos : ");
         int edad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la edad : "));
@@ -55,8 +75,14 @@ public class ViewController {
         institutoController.insertarAlumno(nombre, apellido, edad, codTutor);
     }
 
+    // Opcion 3 - Actualizar Alumno
+    private void actualizarAlumno() throws SQLException{
+        Long id = Long.parseLong(JOptionPane.showInputDialog("Ingresa el id del alumno a modificar"));
+        
+    }
+
     // Opcion 6 - Listar Todos los alumnos
-    public void listarAlumnos() throws Exception {
+    private void listarAlumnos() throws Exception {
         List<Alumno> alumnos = institutoController.listarAlumnos();
         StringBuilder sb = new StringBuilder();
         for (Alumno alumno : alumnos) {

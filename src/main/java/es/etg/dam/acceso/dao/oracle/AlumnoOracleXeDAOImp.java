@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.spi.DirStateFactory;
+
 import es.etg.dam.acceso.dao.AlumnoDAO;
 import es.etg.dam.acceso.model.Alumno;
 
@@ -45,13 +47,17 @@ public class AlumnoOracleXeDAOImp implements AlumnoDAO {
                 VALUES (?,?,?,?)
                 """;
 
-        try (PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.getGeneratedKeys()) {
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, a.getNombre());
             ps.setString(2, a.getApellido());
             ps.setInt(3, a.getEdad());
             ps.setInt(4, a.getCodTutor());
             ps.executeUpdate();
-            a.setCodAlumno(rs.getLong(1));
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()){
+                a.setCodAlumno(rs.getLong(1));
+            }
+            
             return 1;
         }
     }
@@ -94,6 +100,14 @@ public class AlumnoOracleXeDAOImp implements AlumnoDAO {
         }
 
         return alumnos;
+    }
+
+    public Alumno obtenerAlumno(int id) throws SQLException{
+        final String query = "SELECT cod_alumn, nombre, apellido, edad, cod_tutor FROM alumno WHERE cod_num = ?";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+            if (rs.next()))
     }
 
     @Override

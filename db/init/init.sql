@@ -24,14 +24,14 @@ create table usuario.alumno (
 INSERT INTO usuario.profesor (cod_prof, nombre, apellido)
 VALUES (1, 'Eva', 'Pinilla');
 
-INSERT INTO usuario.alumno (cod_alumn, nombre, apellido, edad, cod_tutor)
-VALUES (1, 'Luismi', 'Lopez', 19, 1);
+INSERT INTO usuario.alumno (nombre, apellido, edad, cod_tutor)
+VALUES ('Luismi', 'Lopez', 19, 1);
 
 INSERT INTO usuario.profesor (cod_prof, nombre, apellido)
 VALUES (2, 'Julian', 'Parra');
 
-INSERT INTO usuario.alumno (cod_alumn, nombre, apellido, edad, cod_tutor)
-VALUES (2, 'Toni', 'Sancha', 20, 2);
+INSERT INTO usuario.alumno (nombre, apellido, edad, cod_tutor)
+VALUES ('Toni', 'Sancha', 20, 2);
 
-INSERT INTO usuario.alumno (cod_alumn, nombre, apellido, edad, cod_tutor)
-VALUES (3, 'David', 'Oliva', 19, 2);
+INSERT INTO usuario.alumno (nombre, apellido, edad, cod_tutor)
+VALUES ('David', 'Oliva', 19, 2);
