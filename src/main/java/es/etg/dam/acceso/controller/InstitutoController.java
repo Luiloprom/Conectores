@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import es.etg.dam.acceso.dao.AlumnoDAO;
+import es.etg.dam.acceso.dao.ProfesorDAO;
 import es.etg.dam.acceso.model.Alumno;
 import es.etg.dam.acceso.model.Instituto;
 import es.etg.dam.acceso.model.InstitutoFactory;
@@ -22,8 +23,9 @@ public class InstitutoController {
     public void empezar() throws Exception {
         viewController.setInstitutoController(this);
         Modo modo = viewController.cargarMenuInicial();
-        AlumnoDAO alumnoDAO = InstitutoFactory.obtenerModo(modo);
-        instituto = new Instituto(alumnoDAO);
+        AlumnoDAO alumnoDAO = InstitutoFactory.obtenerAlumnoDAO(modo);
+        ProfesorDAO profesorDAO = InstitutoFactory.obtenerProfesorDAO(modo);
+        instituto = new Instituto(alumnoDAO, profesorDAO);
         viewController.cargarMenuOpciones();
     }
 
@@ -37,17 +39,17 @@ public class InstitutoController {
         instituto.insertarAlumno(al);
     }
 
-    public void modificarAlumno(Long id,String nombre, String apellidos, int edad, int cod_tutor) throws SQLException {
+    public void modificarAlumno(Long id, String nombre, String apellidos, int edad, int cod_tutor) throws SQLException {
         Alumno al = new Alumno(id, nombre, apellidos, edad, cod_tutor);
 
         instituto.actualizarAlumno(al);
     }
 
-    public Alumno obtenerAlumno(Long id) throws SQLException{
+    public Alumno obtenerAlumno(Long id) throws SQLException {
         return instituto.obtenerAlumno(id);
     }
 
-    public List<String> listarRelacionados() throws SQLException{
+    public List<String> listarRelacionados() throws SQLException {
         return instituto.listarRelacionados();
     }
 
