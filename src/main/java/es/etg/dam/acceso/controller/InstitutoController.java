@@ -9,6 +9,7 @@ import es.etg.dam.acceso.model.Alumno;
 import es.etg.dam.acceso.model.Instituto;
 import es.etg.dam.acceso.model.InstitutoFactory;
 import es.etg.dam.acceso.model.Modo;
+import es.etg.dam.acceso.model.Profesor;
 import es.etg.dam.acceso.view.ViewController;
 
 public class InstitutoController {
@@ -29,6 +30,7 @@ public class InstitutoController {
         viewController.cargarMenuOpciones();
     }
 
+    // Metodos de alumno
     public List<Alumno> listarAlumnos() throws SQLException {
         return instituto.listarAllAlumnos();
     }
@@ -51,6 +53,12 @@ public class InstitutoController {
 
     public List<String> listarRelacionados() throws SQLException {
         return instituto.listarRelacionados();
+    }
+
+    // Metodos de profesor
+    public int insertarProfesor(Long id, String nombre, String apellido) throws SQLException {
+        Profesor p = new Profesor(id, nombre, apellido);
+        return instituto.actualizarProfesor(p);
     }
 
 }
