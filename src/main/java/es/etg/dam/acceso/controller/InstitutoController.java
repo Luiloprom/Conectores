@@ -56,9 +56,22 @@ public class InstitutoController {
     }
 
     // Metodos de profesor
-    public int insertarProfesor(Long id, String nombre, String apellido) throws SQLException {
+    public int insertarProfesor(String nombre, String apellido) throws SQLException {
+        Profesor p = new Profesor(null, nombre, apellido);
+        return instituto.actualizarProfesor(p);
+    }
+
+    public Profesor obtenerProfesor(Long id) throws SQLException {
+        return instituto.obtenerProfesor(id);
+    }
+
+    public int modificarProfesor(Long id, String nombre, String apellido) throws SQLException {
         Profesor p = new Profesor(id, nombre, apellido);
         return instituto.actualizarProfesor(p);
+    }
+
+    public List<Profesor> listarProfesores() throws SQLException {
+        return instituto.listarProfesores();
     }
 
 }

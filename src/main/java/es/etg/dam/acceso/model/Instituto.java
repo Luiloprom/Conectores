@@ -57,4 +57,8 @@ public class Instituto {
     public List<Profesor> listarProfesores() throws SQLException {
         return profesorDAO.listarAll();
     }
+
+    public Profesor obtenerProfesor(Long id) throws SQLException {
+        return profesorDAO.obtenerProfesor(id);
+    }
 }

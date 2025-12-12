@@ -12,7 +12,11 @@ import es.etg.dam.acceso.model.Profesor;
 
 public class ProfesorOracleXeDAOImp implements ProfesorDAO {
 
-    private Connection conn;
+    private final Connection conn;
+
+    public ProfesorOracleXeDAOImp() throws SQLException {
+        this.conn = ConexionOracle.obtenerConexion().getConn();
+    }
 
     @Override
     public void crearTabla() throws SQLException {
@@ -23,17 +27,16 @@ public class ProfesorOracleXeDAOImp implements ProfesorDAO {
     @Override
     public int insertar(Profesor p) throws SQLException {
         final String query = """
-                INSERT INTO profesor (cod_prof, nombre, apellido)
-                VALUES (?,?,?)
+                INSERT INTO profesor (nombre, apellido)
+                VALUES (?,?)
                 """;
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setLong(1, p.getId());
-            ps.setString(2, p.getNombre());
-            ps.setString(3, p.getApellido());
+            ps.setString(1, p.getNombre());
+            ps.setString(2, p.getApellido());
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
+            if (rs.next()){
                 p.setId(rs.getLong(1));
             }
 
@@ -72,5 +75,21 @@ public class ProfesorOracleXeDAOImp implements ProfesorDAO {
             }
         }
         return profesores;
+    }
+
+    @Override
+    public Profesor obtenerProfesor(Long id) throws SQLException {
+        final String query = "SELECT cod_prof, nombre, apellido FROM profesor WHERE cod_prof = ?";
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setLong(1, id);
+            ResultSet rs = ps.executeQuery();
+                if (rs.next()){
+                    Long cod = rs.getLong("cod_prof");
+                    String nombre = rs.getString("nombre");
+                    String apellido = rs.getString("apellido");
+                return new Profesor(cod, nombre, apellido);
+                }
+        }
+        return null;
     }
 }

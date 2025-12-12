@@ -23,19 +23,21 @@ public class ViewController {
     private final String OPC_4 = "4 - Actualizar Alumno";
     private final String OPC_5 = "5 - Actualizar Profesor";
     private final String OPC_6 = "6 - Listar todos los Alumnos";
-    private final String OPC_7 = "7 - Listar Alumnos y sus tutores";
-    private final String OPC_8 = "8 - Buscar alumno por id";
-    private final String OPC_9 = "9 - Salir";
+    private final String OPC_7 = "7 - Listar todos los Profesores";
+    private final String OPC_8 = "8 - Listar Alumnos y sus tutores";
+    private final String OPC_9 = "9 - Buscar alumno por id";
+    private final String OPC_10 = "10 - Salir";
 
-    private final String FORMAT_MENU_PRINCIPAL = "Elige una opcion : \n %s \n %s \n %s \n %s \n %s \n %s \n %s \n %s \n %s";
+    private final String FORMAT_MENU_PRINCIPAL = "Elige una opcion : \n %s \n %s \n %s \n %s \n %s \n %s \n %s \n %s \n %s \n %s";
     private final String MENU_PRINCIPAL = String.format(FORMAT_MENU_PRINCIPAL, OPC_1, OPC_2, OPC_3, OPC_4, OPC_5, OPC_6,
-            OPC_7, OPC_8, OPC_9);
+            OPC_7, OPC_8, OPC_9, OPC_10);
 
     protected InstitutoController institutoController;
-    private final ViewProfesor viewProfesor = new ViewProfesor(institutoController);
+    private ViewProfesor viewProfesor;
 
     public void setInstitutoController(InstitutoController institutoController) {
         this.institutoController = institutoController;
+        viewProfesor = new ViewProfesor(institutoController);
     }
 
     public Modo cargarMenuInicial() {
@@ -58,10 +60,12 @@ public class ViewController {
                 case 2 -> insertarAlumno();
                 case 3 -> viewProfesor.insertarProfesor();
                 case 4 -> actualizarAlumno();
+                case 5 -> viewProfesor.insertarProfesor();
                 case 6 -> listarAlumnos();
-                case 7 -> listarRelacionados();
-                case 8 -> obtenerAlumno();
-                case 9 -> salir = true;
+                case 7 -> viewProfesor.listarAll();
+                case 8 -> listarRelacionados();
+                case 9 -> obtenerAlumno();
+                case 10 -> salir = true;
                 default -> throw new AssertionError();
             }
         }

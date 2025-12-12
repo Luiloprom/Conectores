@@ -32,4 +32,10 @@ public class ProfesorMockDAOImp implements ProfesorDAO {
         throw new UnsupportedOperationException("Unimplemented method 'listarAll'");
     }
 
+    @Override
+    public Profesor obtenerProfesor(Long id) throws SQLException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'obtenerProfesor'");
+    }
+
 }

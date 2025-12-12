@@ -19,4 +19,5 @@ public interface ProfesorDAO extends DAO<Profesor> {
     @Override
     public List<Profesor> listarAll() throws SQLException;
 
+    public Profesor obtenerProfesor(Long id) throws SQLException;
 }
