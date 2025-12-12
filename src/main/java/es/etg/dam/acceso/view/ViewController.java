@@ -55,7 +55,7 @@ public class ViewController {
             int respuesta = Integer
                     .parseInt(JOptionPane.showInputDialog(MENU_PRINCIPAL));
             switch (respuesta) {
-                case 1 -> institutoController.crearTablas();
+                case 1 -> crearTablas();
                 case 2 -> viewAlumno.insertarAlumno();
                 case 3 -> viewProfesor.insertarProfesor();
                 case 4 -> viewAlumno.actualizarAlumno();
@@ -67,6 +67,15 @@ public class ViewController {
                 case 10 -> salir = true;
                 default -> throw new AssertionError();
             }
+        }
+    }
+
+    private void crearTablas() {
+        try {
+            institutoController.crearTablas();
+            JOptionPane.showMessageDialog(null, "Se han creado las tablas correctamente");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Las tablas ya estan creadas");
         }
     }
 }

@@ -7,14 +7,15 @@ import javax.swing.JOptionPane;
 
 import es.etg.dam.acceso.controller.InstitutoController;
 import es.etg.dam.acceso.model.Profesor;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
 public class ViewProfesor {
     private InstitutoController institutoController;
 
+    public ViewProfesor(InstitutoController institutoController) {
+        this.institutoController = institutoController;
+    }
 
     // Opcion 3 - Insertar Profesor
     public void insertarProfesor() throws SQLException {

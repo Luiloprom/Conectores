@@ -8,13 +8,15 @@ import javax.swing.JOptionPane;
 
 import es.etg.dam.acceso.controller.InstitutoController;
 import es.etg.dam.acceso.model.Alumno;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
 public class ViewAlumno {
     private InstitutoController institutoController;
+
+    public ViewAlumno(InstitutoController institutoController) {
+        this.institutoController = institutoController;
+    }
 
     // Opcion 2 - Insertar Alumno
     public void insertarAlumno() {
