@@ -41,4 +41,4 @@ Link del repositorio: [https://github.com/Luiloprom/luismi.git](https://github.c
 - Ejecutar la `App`.
 
 ## Diagrama UML
-![DiagramaUML](UML.png)
+![DiagramaUML](/doc/UML.png)
