@@ -144,11 +144,4 @@ public class AlumnoOracleXeDAOImp implements AlumnoDAO {
     return resultado;
 }
 
-
-    @Override
-    public List<Alumno> consultar(String a) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'consultar'");
-    }
-
 }

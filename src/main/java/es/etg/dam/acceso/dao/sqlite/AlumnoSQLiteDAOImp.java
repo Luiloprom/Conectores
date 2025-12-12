@@ -1,9 +1,6 @@
 package es.etg.dam.acceso.dao.sqlite;
 
-import java.io.File;
-import java.net.URL;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,16 +11,11 @@ import es.etg.dam.acceso.dao.AlumnoDAO;
 import es.etg.dam.acceso.model.Alumno;
 
 public class AlumnoSQLiteDAOImp implements AlumnoDAO {
-    private static final String DATABASE_NAME = "es/etg/dam/acceso/mibase.db";
-    private static final String JDBC_URL = "jdbc:sqlite:%s";
 
     private final Connection conn;
 
     public AlumnoSQLiteDAOImp() throws Exception {
-        URL resource = AlumnoSQLiteDAOImp.class.getClassLoader().getResource(DATABASE_NAME);
-        String path = new File(resource.toURI()).getAbsolutePath();
-        String url = String.format(JDBC_URL, path);
-        this.conn = DriverManager.getConnection(url);
+        this.conn = ConexionSQLite.obtenerConexion().getConn();
     }
 
     @Override
@@ -129,12 +121,6 @@ public class AlumnoSQLiteDAOImp implements AlumnoDAO {
     }
 
     return resultado;
-    }
-
-    @Override
-    public List<Alumno> consultar(String a) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'consultar'");
     }
 
     @Override

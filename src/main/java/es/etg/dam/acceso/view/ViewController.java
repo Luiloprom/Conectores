@@ -1,12 +1,8 @@
 package es.etg.dam.acceso.view;
 
-import java.sql.SQLException;
-import java.util.List;
-
 import javax.swing.JOptionPane;
 
 import es.etg.dam.acceso.controller.InstitutoController;
-import es.etg.dam.acceso.model.Alumno;
 import es.etg.dam.acceso.model.Modo;
 
 public class ViewController {
@@ -34,10 +30,12 @@ public class ViewController {
 
     protected InstitutoController institutoController;
     private ViewProfesor viewProfesor;
+    private ViewAlumno viewAlumno;
 
     public void setInstitutoController(InstitutoController institutoController) {
         this.institutoController = institutoController;
         viewProfesor = new ViewProfesor(institutoController);
+        viewAlumno = new ViewAlumno(institutoController);
     }
 
     public Modo cargarMenuInicial() {
@@ -57,78 +55,18 @@ public class ViewController {
             int respuesta = Integer
                     .parseInt(JOptionPane.showInputDialog(MENU_PRINCIPAL));
             switch (respuesta) {
-                case 2 -> insertarAlumno();
+                case 1 -> institutoController.crearTablas();
+                case 2 -> viewAlumno.insertarAlumno();
                 case 3 -> viewProfesor.insertarProfesor();
-                case 4 -> actualizarAlumno();
-                case 5 -> viewProfesor.insertarProfesor();
-                case 6 -> listarAlumnos();
+                case 4 -> viewAlumno.actualizarAlumno();
+                case 5 -> viewProfesor.modificarProfesor();
+                case 6 -> viewAlumno.listarAlumnos();
                 case 7 -> viewProfesor.listarAll();
-                case 8 -> listarRelacionados();
-                case 9 -> obtenerAlumno();
+                case 8 -> viewAlumno.listarRelacionados();
+                case 9 -> viewAlumno.obtenerAlumno();
                 case 10 -> salir = true;
                 default -> throw new AssertionError();
             }
-        }
-
-    }
-
-    // Opcion 2 - Insertar Alumno
-    private void insertarAlumno() throws SQLException {
-        String nombre = JOptionPane.showInputDialog("Ingresa un nombre : ");
-        String apellido = JOptionPane.showInputDialog("Ingresa los apellidos : ");
-        int edad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la edad : "));
-        int codTutor = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el codigo del tutor"));
-
-        institutoController.insertarAlumno(nombre, apellido, edad, codTutor);
-    }
-
-    // Opcion 4 - Actualizar Alumno
-    private void actualizarAlumno() throws SQLException {
-        Long id = Long.valueOf(JOptionPane.showInputDialog("Ingresa el id del alumno a modificar"));
-        if (institutoController.obtenerAlumno(id) != null) {
-            String nombre = JOptionPane.showInputDialog("Ingresa un nuevo nombre : ");
-            String apellido = JOptionPane.showInputDialog("Ingresa los nuevos apellidos : ");
-            int edad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nueva edad : "));
-            int codTutor = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el nuevo codigo del tutor"));
-            institutoController.modificarAlumno(id, nombre, apellido, edad, codTutor);
-        } else {
-            JOptionPane.showMessageDialog(null, String.format("No se a encontrado el alumno con id %d ", id));
-        }
-
-    }
-
-    // Opcion 6 - Listar Todos los alumnos
-    private void listarAlumnos() throws Exception {
-        List<Alumno> alumnos = institutoController.listarAlumnos();
-        StringBuilder sb = new StringBuilder();
-        for (Alumno alumno : alumnos) {
-            sb.append(alumno.toString());
-        }
-        JOptionPane.showMessageDialog(null, sb);
-    }
-
-    // Opcion 7 - Listar Alumnos y sus tutores
-    private void listarRelacionados() throws SQLException {
-        List<String> lineas;
-        try {
-            lineas = institutoController.listarRelacionados();
-            StringBuilder sb = new StringBuilder();
-            for (String linea : lineas) {
-                sb.append(linea).append("\n");
-            }
-            JOptionPane.showMessageDialog(null, sb);
-        } catch (SQLException e) {
-        }
-    }
-
-    // Opcion 8 - Listar Alumnos por idç
-    private void obtenerAlumno() throws SQLException {
-        Long id = Long.valueOf(JOptionPane.showInputDialog("Ingresa el id del alumno que quieres buscar"));
-        Alumno a = institutoController.obtenerAlumno(id);
-        if (a != null) {
-            JOptionPane.showMessageDialog(null, a.toString());
-        } else {
-            JOptionPane.showMessageDialog(null, String.format("El alumno con id %d no existe", id));
         }
     }
 }

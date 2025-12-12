@@ -10,43 +10,32 @@ public class AlumnoMockDAOImp implements AlumnoDAO {
 
     @Override
     public void crearTabla() throws SQLException {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'crearTabla'");
     }
 
     @Override
     public int insertar(Alumno a) throws SQLException {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'insertar'");
     }
 
     @Override
     public int actualizar(Alumno a) throws SQLException {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'actualizar'");
     }
 
     @Override
     public List<Alumno> listarAll() throws SQLException {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'listarAll'");
     }
 
     @Override
     public List<String> listarRelacionados() throws SQLException {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'listarRelacionados'");
     }
 
-    @Override
-    public List<Alumno> consultar(String a) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'consultar'");
-    }
 
     @Override
     public Alumno obtenerAlumno(Long id) throws SQLException {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'obtenerAlumno'");
     }
 

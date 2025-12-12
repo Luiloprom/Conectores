@@ -15,6 +15,8 @@ import lombok.Data;
 public class ViewProfesor {
     private InstitutoController institutoController;
 
+
+    // Opcion 3 - Insertar Profesor
     public void insertarProfesor() throws SQLException {
         String nombre = JOptionPane.showInputDialog("Ingresa un nombre : ");
         String apellido = JOptionPane.showInputDialog("Ingresa los apellidos : ");
@@ -25,6 +27,7 @@ public class ViewProfesor {
         }
     }
 
+    // Opcion 5 - Modificar Profesor
     public void modificarProfesor() throws SQLException {
         Long id = Long.valueOf(JOptionPane.showInputDialog("Ingresa el id del profesor a modificar"));
         if (institutoController.obtenerProfesor(id) != null) {
@@ -35,10 +38,11 @@ public class ViewProfesor {
                 JOptionPane.showMessageDialog(null, "No se a modificado ninguna linea");
             }
         } else {
-            JOptionPane.showMessageDialog(null, String.format("No se a encontrado el alumno con id %d ", id));
+            JOptionPane.showMessageDialog(null, String.format("No se a encontrado el profesor con id %d ", id));
         }
     }
 
+    // Opcion 7 - Listar todos los profesores
     public void listarAll() throws SQLException {
         List<Profesor> profesores = institutoController.listarProfesores();
         StringBuilder sb = new StringBuilder();

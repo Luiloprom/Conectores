@@ -21,7 +21,5 @@ public interface AlumnoDAO extends DAO<Alumno> {
 
     public List<String> listarRelacionados() throws SQLException;
 
-    public List<Alumno> consultar(String a) throws SQLException;
-
     public Alumno obtenerAlumno(Long id) throws SQLException;
 }

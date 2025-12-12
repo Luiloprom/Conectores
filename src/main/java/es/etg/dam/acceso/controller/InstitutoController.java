@@ -14,11 +14,10 @@ import es.etg.dam.acceso.view.ViewController;
 
 public class InstitutoController {
 
-    private final ViewController viewController;
+    private final ViewController viewController = new ViewController(); 
     private Instituto instituto;
 
-    public InstitutoController(ViewController viewController) {
-        this.viewController = viewController;
+    public InstitutoController() {
     }
 
     public void empezar() throws Exception {
@@ -30,15 +29,20 @@ public class InstitutoController {
         viewController.cargarMenuOpciones();
     }
 
+    public void crearTablas() throws Exception {
+        instituto.crearTablaProfesor();
+        instituto.crearTablaAlumno();
+    }
+
     // Metodos de alumno
     public List<Alumno> listarAlumnos() throws SQLException {
         return instituto.listarAllAlumnos();
     }
 
-    public void insertarAlumno(String nombre, String apellidos, int edad, int cod_tutor) throws SQLException {
+    public int insertarAlumno(String nombre, String apellidos, int edad, int cod_tutor) throws SQLException {
         Alumno al = new Alumno(null, nombre, apellidos, edad, cod_tutor);
 
-        instituto.insertarAlumno(al);
+        return instituto.insertarAlumno(al);
     }
 
     public void modificarAlumno(Long id, String nombre, String apellidos, int edad, int cod_tutor) throws SQLException {
@@ -58,7 +62,7 @@ public class InstitutoController {
     // Metodos de profesor
     public int insertarProfesor(String nombre, String apellido) throws SQLException {
         Profesor p = new Profesor(null, nombre, apellido);
-        return instituto.actualizarProfesor(p);
+        return instituto.insertarProfesor(p);
     }
 
     public Profesor obtenerProfesor(Long id) throws SQLException {
